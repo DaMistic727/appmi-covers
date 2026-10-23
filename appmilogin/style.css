@@ -1,0 +1,738 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap');
+
+:root {
+  --orange: #f47721;
+  --orange-dark: #d85d0c;
+  --orange-light: #fff5ee;
+  --orange-glow: rgba(244, 119, 33, 0.22);
+  --ink: #181818;
+  --muted: #76726c;
+  --cream: #f3f0ea;
+  --paper: #fbfaf7;
+  --line: #ded9d0;
+  --line-light: #eee9e0;
+  --white: #ffffff;
+  --success: #329a5d;
+  --success-bg: #eef8f2;
+  --error: #dc3545;
+  --error-bg: #fdf2f2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body.auth-page {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  background: radial-gradient(circle at 82% 22%, #ffffff 0, #f5f1eb 26%, transparent 52%),
+              radial-gradient(circle at 14% 78%, #ffffff 0, #f5f1eb 22%, transparent 48%),
+              var(--cream);
+  font-family: 'Manrope', Arial, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input {
+  font: inherit;
+}
+
+.container {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Фоновые декорации в стиле AppMi (орбиты, свечение)
+   ========================================================================== */
+.bg-decorations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orbit--one {
+  width: 680px;
+  height: 680px;
+  top: 50%;
+  left: 50%;
+  margin-top: -340px;
+  margin-left: -340px;
+  border: 1px dashed rgba(211, 204, 195, 0.7);
+  animation: spinSlow 40s linear infinite;
+}
+
+.orbit--two {
+  width: 900px;
+  height: 900px;
+  top: 50%;
+  left: 50%;
+  margin-top: -450px;
+  margin-left: -450px;
+  border: 1px solid rgba(222, 217, 208, 0.45);
+}
+
+.bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(244, 119, 33, 0.08) 0%, transparent 68%);
+  filter: blur(40px);
+}
+
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   Шапка (Header)
+   ========================================================================== */
+.header {
+  position: relative;
+  z-index: 10;
+  padding: 26px 0;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -1px;
+}
+
+.logo > span > span {
+  color: var(--orange);
+}
+
+.logo__mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  background: var(--orange);
+  border-radius: 10px;
+  font-size: 19px;
+  font-weight: 700;
+  transform: rotate(-5deg);
+  box-shadow: 0 6px 14px var(--orange-glow);
+  transition: transform 0.25s ease;
+}
+
+.logo:hover .logo__mark {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header__contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.header__contact .phone {
+  transition: color 0.2s;
+}
+
+.header__contact .phone:hover {
+  color: var(--orange);
+}
+
+.header__contact span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Кнопки */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 14px;
+  color: #fff;
+  background: var(--orange);
+  font-family: 'Manrope', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 12px 26px var(--orange-glow);
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.button:hover {
+  background: var(--orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(244, 119, 33, 0.32);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button--full {
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.button__arrow {
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.button:hover .button__arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Основная секция (Auth Main)
+   ========================================================================== */
+.auth-main {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px 48px;
+}
+
+.auth-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ==========================================================================
+   Плавающие информационные бейджи (в духе appmicloud/appmibitrix)
+   ========================================================================== */
+.floating-badge {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(47, 39, 30, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.floating-badge:hover {
+  transform: translateY(-3px);
+}
+
+.floating-badge--top {
+  top: -24px;
+  right: -55px;
+}
+
+.floating-badge--bottom {
+  bottom: 24px;
+  left: -65px;
+}
+
+.badge-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 4px var(--orange-light);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.badge-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--success-bg);
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.badge-text strong {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.badge-text small {
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Карточка авторизации (Auth Card)
+   ========================================================================== */
+.auth-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 28px 75px rgba(47, 39, 30, 0.14),
+              0 8px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+
+/* Верхняя панель карточки (Dashboard bar) */
+.card-dots {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--line-light);
+  background: #faf8f5;
+  font-size: 10px;
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.window-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ded9d0;
+}
+
+.window-dots i:first-child {
+  background: var(--orange);
+}
+
+.card-dots__title {
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.card-dots__status {
+  margin-left: auto;
+  color: var(--success);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* Тело карточки */
+.auth-card__body {
+  padding: 38px 40px 38px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: #5f5b56;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.eyebrow span {
+  width: 23px;
+  height: 2px;
+  background: var(--orange);
+}
+
+h1 {
+  margin: 0 0 10px;
+  font-family: 'Unbounded', sans-serif;
+  letter-spacing: -0.055em;
+  line-height: 1.15;
+  font-size: clamp(26px, 3.2vw, 34px);
+  color: var(--ink);
+}
+
+h1 em {
+  color: var(--orange);
+  font-style: normal;
+}
+
+.auth-lead {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Форма и поля ввода
+   ========================================================================== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Сообщение об ошибке / успехе */
+.form-alert {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+.form-alert--error {
+  background: var(--error-bg);
+  border: 1px solid rgba(220, 53, 69, 0.25);
+  color: var(--error);
+}
+
+.form-alert--success {
+  background: var(--success-bg);
+  border: 1px solid rgba(50, 154, 93, 0.25);
+  color: var(--success);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3d3b37;
+  letter-spacing: 0.2px;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forgot-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: var(--orange);
+  text-decoration: underline;
+}
+
+/* Поле ввода с иконкой */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9d9891;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.form-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 46px 0 46px;
+  background: #faf8f5;
+  border: 1.5px solid var(--line);
+  border-radius: 13px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.form-input::placeholder {
+  color: #a7a29a;
+  font-weight: 400;
+}
+
+.form-input:focus {
+  background: #ffffff;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px var(--orange-glow);
+}
+
+.form-input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: var(--orange);
+}
+
+/* Кнопка показа/скрытия пароля */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #8f8a82;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.toggle-password:hover {
+  color: var(--ink);
+  background: #eeeae4;
+}
+
+/* Чекбокс "Запомнить меня" */
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  gap: 10px;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: #faf8f5;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  border-color: var(--orange);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--orange);
+  border-color: var(--orange);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #55524d;
+}
+
+/* ==========================================================================
+   Подвал страницы (Footer)
+   ========================================================================== */
+.footer {
+  position: relative;
+  z-index: 10;
+  padding: 24px 0;
+  border-top: 1px solid rgba(222, 217, 208, 0.6);
+  background: rgba(243, 240, 234, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.footer__copy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer__copy a {
+  transition: color 0.2s;
+}
+
+.footer__copy a:hover {
+  color: var(--ink);
+}
+
+.footer__sep {
+  color: #bbb5ab;
+}
+
+.footer__help {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__help a {
+  font-weight: 700;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+
+.footer__help a:hover {
+  color: var(--orange);
+}
+
+/* ==========================================================================
+   Адаптивность для мобильных и планшетов
+   ========================================================================== */
+@media (max-width: 680px) {
+  .header {
+    padding: 18px 0;
+  }
+
+  .header__contact {
+    display: none;
+  }
+
+  .floating-badge {
+    display: none;
+  }
+
+  .auth-main {
+    padding: 16px 14px 32px;
+  }
+
+  .auth-card__body {
+    padding: 28px 22px 28px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .footer__copy {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
